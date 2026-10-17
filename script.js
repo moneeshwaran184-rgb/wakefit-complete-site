@@ -97,9 +97,7 @@
         }
 
         if (loadedCount >= TOTAL_FRAMES && loader) {
-          setTimeout(() => {
-            loader.classList.add('hidden');
-          }, 200);
+          loader.classList.add('hidden');
         }
       };
 
@@ -113,6 +111,13 @@
       img.src = FRAME_PATH(i + 1);
       images[i] = img;
     }
+
+    // Safety fallback: allow immediate interaction without waiting for all 300 frames
+    setTimeout(() => {
+      if (loader && !loader.classList.contains('hidden')) {
+        loader.classList.add('hidden');
+      }
+    }, 400);
   }
 
   window.addEventListener('resize', resizeCanvas, { passive: true });
@@ -122,6 +127,16 @@
   updateScrollTarget();
   preloadImages();
   requestAnimationFrame(animationLoop);
+
+  if (window.location.hash && window.location.hash.startsWith('#scroll=')) {
+    const scrollVal = parseInt(window.location.hash.split('=')[1], 10);
+    if (!isNaN(scrollVal)) {
+      setTimeout(() => {
+        window.scrollTo(0, scrollVal);
+        updateScrollTarget();
+      }, 700);
+    }
+  }
 
   /* ==========================================================================
      2. NAVIGATION & ACTIVE SECTION HIGHLIGHTING
