@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antigravity — Location-Based GPS Wake-Up Alarm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fixed Canvas Video Animation Layer -->
+  <div class="canvas-container">
+    <canvas id="animation-canvas"></canvas>
+    <div class="canvas-vignette"></div>
+  </div>
+
+  <!-- Minimalist Loading Indicator (Fades out once ready) -->
+  <div id="loader" class="loader">
+    <div class="loader-content">
+      <div class="loader-bar-bg">
+        <div id="loader-progress" class="loader-progress"></div>
+      </div>
+      <div id="loader-text" class="loader-text">Loading Experience 0%</div>
+    </div>
+  </div>
+
+  <!-- Floating Capsule Top Navigation -->
+  <header class="navbar-wrapper">
+    <div class="navbar-container">
+      <a href="#" class="brand-logo">ANTIGRAVITY</a>
+
+      <nav class="nav-dock">
+        <a href="#home" class="nav-item active" data-nav="home">Home</a>
+        <a href="#how-it-works" class="nav-item" data-nav="how-it-works">How It Works</a>
+        <a href="#features" class="nav-item" data-nav="features">Features</a>
+        <a href="#live-demo" class="nav-item" data-nav="live-demo">Live Demo</a>
+        <a href="#faq" class="nav-item" data-nav="faq">FAQ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="open-download-nav" class="btn-pill-subtle">
+          <span>Download App</span>
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </button>
+        <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle navigation menu">
+          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="mobile-drawer hidden">
+      <a href="#home" class="mobile-nav-item active">Home</a>
+      <a href="#how-it-works" class="mobile-nav-item">How It Works</a>
+      <a href="#features" class="mobile-nav-item">Features</a>
+      <a href="#live-demo" class="mobile-nav-item">Live Demo</a>
+      <a href="#faq" class="mobile-nav-item">FAQ</a>
+      <div class="mobile-drawer-footer">
+        <button id="open-download-mobile" class="btn-pill-primary w-full">
+          <span>Download APK (18.4 MB)</span>
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Foreground Scrollable Website Flow -->
+  <main class="page-content">
+
+    <!-- 1. HERO SECTION -->
+    <section id="home" class="section hero-section">
+      <div class="section-container">
+        
+        <div class="hero-header text-center">
+          <div class="hero-badge-pill">
+            <span class="pulse-dot"></span>
+            <span>Location-Aware Background Geofencing</span>
+          </div>
+
+          <h1 class="hero-title">
+            Never Miss Your<br><span class="text-gradient">Stop Again.</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Set your destination and relax. Whether you're traveling by bus, car, train, or plane, our GPS location alarm wakes you up exactly when you reach your target location.
+          </p>
+
+          <div class="hero-cta-group">
+            <button id="hero-download-btn" class="btn-pill-primary hero-btn">
+              <span>Download the App</span>
+              <div class="icon-circle">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+              </div>
+            </button>
+          </div>
+
+          <div class="hero-meta-row">
+            <span>Android APK v2.4.1</span>
+            <span class="sep">•</span>
+            <span>18.4 MB Direct Install</span>
+            <span class="sep">•</span>
+            <span class="highlight-green">100% Offline Compatible</span>
+          </div>
+        </div>
+
+        <!-- Hero Dual Grid: Feature Teasers & Mockup -->
+        <div class="hero-grid">
+          
+          <!-- Left Cards -->
+          <div class="hero-left-cards">
+            
+            <div class="glass-card hero-card">
+              <div class="card-icon-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+              </div>
+              <h3 class="card-title">Location-triggered, not time-based</h3>
+              <p class="card-desc">
+                Standard alarms fail when transit delays occur. Antigravity continuously monitors your radial proximity to your destination stop and rings only when you enter your target arrival perimeter.
+              </p>
+              <div class="card-telemetry">
+                <span>RADIAL ACCURACY: ±15M</span>
+                <span class="sep">•</span>
+                <span class="highlight-green">100% OFFLINE</span>
+              </div>
+            </div>
+
+            <div class="glass-card hero-card">
+              <div class="card-icon-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="16" rx="2"></rect><path d="M4 11h16"></path><path d="M12 3v8"></path><path d="m8 19-2 3"></path><path d="m18 22-2-3"></path><circle cx="8" cy="15" r="1"></circle><circle cx="16" cy="15" r="1"></circle></svg>
+              </div>
+              <h3 class="card-title">Universal travel velocity modes</h3>
+              <p class="card-desc">
+                Calibrated profiles for commuter buses (35 km/h), highway vans (70 km/h), express rail (110 km/h), and commercial flights (750 km/h) ensure you get the exact wake-up lead time you need.
+              </p>
+              <div class="card-telemetry">
+                <span>BATTERY DRAW: &lt; 1.8%/HR</span>
+                <span class="sep">•</span>
+                <span class="highlight-amber">DND OVERRIDE</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Mockup Phone Frame -->
+          <div class="hero-mockup-wrapper">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+
+              <div class="phone-screen">
+                <div class="phone-status-bar">
+                  <span class="status-time">09:41</span>
+                  <div class="status-icons">
+                    <span class="status-chip">GPS ACTIVE</span>
+                    <span class="status-bat">98%</span>
+                  </div>
+                </div>
+
+                <!-- Transport Mode Selector in Phone -->
+                <div class="mock-mode-tabs">
+                  <button class="mock-tab active" data-mode="train" title="Train Mode">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="16" rx="2"></rect><path d="M4 11h16"></path><circle cx="8" cy="15" r="1"></circle><circle cx="16" cy="15" r="1"></circle></svg>
+                    <span>Train</span>
+                  </button>
+                  <button class="mock-tab" data-mode="bus" title="Bus Mode">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6v6"></path><path d="M15 6v6"></path><path d="M2 12h19.6"></path><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.2 6 18.2 6H5.8C4.8 6 3.9 6.8 3.6 7.8L2.2 12.8c-.1.4-.2.8-.2 1.2 0 .4.1.8.2 1.2.3 1.1.8 2.8.8 2.8h3"></path><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg>
+                    <span>Bus</span>
+                  </button>
+                  <button class="mock-tab" data-mode="car" title="Car Mode">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9C2.1 11 2 11.5 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+                    <span>Car</span>
+                  </button>
+                  <button class="mock-tab" data-mode="plane" title="Flight Mode">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path></svg>
+                    <span>Air</span>
+                  </button>
+                </div>
+
+                <!-- Radar Display -->
+                <div class="mock-radar-box">
+                  <div class="radar-circle c3"></div>
+                  <div class="radar-circle c2"></div>
+                  <div class="radar-circle c1"></div>
+                  <div class="radar-sweep"></div>
+
+                  <div class="radar-pin">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                  </div>
+                  <div class="radar-label">Central Station Terminal</div>
+                  <div class="radar-sub">Target Geofence</div>
+
+                  <div class="radar-pill-dist">
+                    <span class="live-dot"></span>
+                    <span id="mock-dist-val">Distance: 3.4 km</span>
+                  </div>
+                </div>
+
+                <!-- Telemetry Row -->
+                <div class="mock-telemetry-box">
+                  <div class="telemetry-item">
+                    <span class="label">Alarm Radius</span>
+                    <span id="mock-radius-val" class="val">1.2 km</span>
+                  </div>
+                  <div class="telemetry-item">
+                    <span class="label">Tone</span>
+                    <span class="val">Station Siren</span>
+                  </div>
+                  <div class="telemetry-item">
+                    <span class="label">Status</span>
+                    <span id="mock-armed-status" class="val highlight-green">Armed</span>
+                  </div>
+                </div>
+
+                <!-- Armed Button -->
+                <button id="mock-arm-toggle" class="btn-mock-arm armed">
+                  <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span id="mock-arm-text">Alarm Armed & Monitoring</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. HOW IT WORKS SECTION -->
+    <section id="how-it-works" class="section">
+      <div class="section-container">
+        
+        <div class="section-header">
+          <div class="section-tag">Simple 3-Step Setup</div>
+          <h2 class="section-title">How Antigravity Works</h2>
+          <p class="section-subtitle">
+            Engineered so you never have to stay awake in fear of missing your transfer or destination stop.
+          </p>
+        </div>
+
+        <div class="steps-grid">
+          
+          <div class="glass-card step-card">
+            <div class="step-card-top">
+              <span class="step-num">01</span>
+              <div class="card-icon-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+            </div>
+            <h3 class="step-title">Set Your Destination</h3>
+            <p class="step-lead">Select your target location on the map before or during your travel.</p>
+            <p class="step-desc">Search any terminal, transit stop, landmark, or custom coordinate. Drop a pin directly onto the offline-cached vector map or choose from your saved favorite commute stops with one tap.</p>
+            <div class="step-details">
+              <div class="detail-item"><span class="dot"></span><span>Instant address & transit stop search</span></div>
+              <div class="detail-item"><span class="dot"></span><span>Offline waypoint caching on device</span></div>
+              <div class="detail-item"><span class="dot"></span><span>Works seamlessly while in motion</span></div>
+            </div>
+          </div>
+
+          <div class="glass-card step-card">
+            <div class="step-card-top">
+              <span class="step-num">02</span>
+              <div class="card-icon-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+              </div>
+            </div>
+            <h3 class="step-title">Choose Radius & Travel Mode</h3>
+            <p class="step-lead">Customize the perimeter distance for when the alarm should trigger.</p>
+            <p class="step-desc">Adjust your arrival alert threshold anywhere from 200 meters to 30 kilometers. Tailored modes for bus, car, commuter train, or flight automatically calibrate GPS polling frequencies to conserve battery.</p>
+            <div class="step-details">
+              <div class="detail-item"><span class="dot"></span><span>Precise radius slider (200m – 30km)</span></div>
+              <div class="detail-item"><span class="dot"></span><span>Speed-adaptive GPS geofencing</span></div>
+              <div class="detail-item"><span class="dot"></span><span>Modes for Bus, Train, Highway, & Air</span></div>
+            </div>
+          </div>
+
+          <div class="glass-card step-card">
+            <div class="step-card-top">
+              <span class="step-num">03</span>
+              <div class="card-icon-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+              </div>
+            </div>
+            <h3 class="step-title">Rest Easy & Wake Up on Time</h3>
+            <p class="step-lead">Sit back and sleep. The app runs in the background and rings loud.</p>
+            <p class="step-desc">Lock your phone and close your eyes. When your location crosses the perimeter threshold, Antigravity overrides silent profiles with progressive, piercing tones and sustained vibrations.</p>
+            <div class="step-details">
+              <div class="detail-item"><span class="dot"></span><span>Do Not Disturb override capability</span></div>
+              <div class="detail-item"><span class="dot"></span><span>Progressive high-volume buzzer tones</span></div>
+              <div class="detail-item"><span class="dot"></span><span>Emergency stop confirmation prompt</span></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Reassurance Banner -->
+        <div class="glass-card reassurance-banner">
+          <div class="reassurance-left">
+            <div class="card-icon-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+            </div>
+            <div>
+              <div class="reassurance-title">Runs reliably with screen locked</div>
+              <div class="reassurance-desc">Low-power Android foreground service prevents OS memory kills during sleep.</div>
+            </div>
+          </div>
+          <button id="step-download-btn" class="btn-pill-subtle">
+            <span>Get the App Now</span>
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. KEY FEATURES SECTION -->
+    <section id="features" class="section">
+      <div class="section-container">
+        
+        <div class="section-header">
+          <div class="section-tag">Engineered For Travel Peace of Mind</div>
+          <h2 class="section-title">Built For Commuters, Travelers & Adventurers</h2>
+          <p class="section-subtitle">
+            Every feature is crafted to guarantee that you never wake up in a panic past your destination stop.
+          </p>
+        </div>
+
+        <div class="bento-grid">
+          
+          <!-- Bento 1 (Large 7 cols) -->
+          <div class="glass-card bento-item bento-7">
+            <div class="card-icon-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+            </div>
+            <div class="bento-tag">GEOFENCE PERIMETER CORE</div>
+            <h3 class="bento-title">GPS & Location-Based Triggering</h3>
+            <p class="bento-lead">Wakes you up based on distance, not time.</p>
+            <p class="bento-desc">
+              Trains stop unexpectedly; buses crawl through unforeseen traffic jams. A traditional alarm rings too early while you are stuck 10 miles away, or rings too late after your stop passed. Antigravity calculates your real-time radial distance continuously, triggering exclusively when you cross your defined target perimeter.
+            </p>
+            <div class="bento-stats-grid">
+              <div class="bento-stat">
+                <span class="stat-label">Radial Precision</span>
+                <span class="stat-val font-mono">±15 meters</span>
+              </div>
+              <div class="bento-stat">
+                <span class="stat-label">Traffic Immunity</span>
+                <span class="stat-val font-mono">100% Dynamic</span>
+              </div>
+              <div class="bento-stat">
+                <span class="stat-label">Perimeter Range</span>
+                <span class="stat-val font-mono">200m – 30km</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento 2 (5 cols) -->
+          <div class="glass-card bento-item bento-5">
+            <div class="card-icon-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="16" rx="2"></rect><path d="M4 11h16"></path><circle cx="8" cy="15" r="1"></circle><circle cx="16" cy="15" r="1"></circle></svg>
+            </div>
+            <div class="bento-tag">DYNAMIC VELOCITY CALIBRATION</div>
+            <h3 class="bento-title">Multi-Mode Support</h3>
+            <p class="bento-lead">Seamless across buses, cars, vans, trains, or planes.</p>
+            <p class="bento-desc">
+              Traveling at 35 km/h on a city bus requires tighter wake-up margins than traveling at 300 km/h on a high-speed rail or 800 km/h on a commercial flight. Pre-tuned velocity profiles calibrate sampling frequencies.
+            </p>
+            <div class="tag-pill-row">
+              <span class="tag-pill">City Bus</span>
+              <span class="tag-pill">Highway Van & Car</span>
+              <span class="tag-pill">High-Speed Rail</span>
+              <span class="tag-pill">Domestic Flight</span>
+            </div>
+          </div>
+
+          <!-- Bento 3 (4 cols) -->
+          <div class="glass-card bento-item bento-4">
+            <div class="card-icon-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"></path><path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1"></path><path d="m11 7-3 5h4l-3 5"></path><line x1="22" y1="11" x2="22" y2="13"></line></svg>
+            </div>
+            <h3 class="bento-title">Battery Efficient</h3>
+            <p class="bento-lead">Optimized background tracking to minimize drain.</p>
+            <p class="bento-desc">
+              Rather than burning power with constant high-frequency GPS pinging, Antigravity uses tiered distance geofencing. GPS sensors sleep and ping sparingly when far away, ramping up only near your target perimeter.
+            </p>
+            <div class="bento-footer-stat">
+              <span>Average Battery Consumption</span>
+              <span class="highlight-green font-mono font-bold">&lt; 1.8% / hour</span>
+            </div>
+          </div>
+
+          <!-- Bento 4 (4 cols) -->
+          <div class="glass-card bento-item bento-4">
+            <div class="card-icon-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+            </div>
+            <h3 class="bento-title">Customizable Alarms</h3>
+            <p class="bento-lead">High-volume tones & vibration patterns.</p>
+            <p class="bento-desc">
+              Commuting environments are noisy. Configure volume-boost overrides that pierce through ambient train rumble and noise-canceling headphones. Choose gentle chimes or urgent tactical sirens.
+            </p>
+            <div class="bento-footer-stat">
+              <span>Sound Engine Options</span>
+              <span class="font-mono font-bold">Chimes, Sirens & Sonar</span>
+            </div>
+          </div>
+
+          <!-- Bento 5 (4 cols) -->
+          <div class="glass-card bento-item bento-4">
+            <div class="card-icon-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="1" x2="23" y2="23"></line><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path><path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+            </div>
+            <h3 class="bento-title">Offline Mode / Low Connectivity</h3>
+            <p class="bento-lead">Works even when network signals dip.</p>
+            <p class="bento-desc">
+              Cellular coverage disappears in subway tunnels, mountain rail passes, and remote highways. Antigravity operates purely using on-device GPS satellite hardware and cached coordinates.
+            </p>
+            <div class="bento-footer-stat">
+              <span>Data Connectivity Required</span>
+              <span class="highlight-green font-mono font-bold">0 KB Needed</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. INTERACTIVE SIMULATOR -->
+    <section id="live-demo" class="section">
+      <div class="section-container">
+        
+        <div class="section-header">
+          <div class="section-tag">Interactive Simulator</div>
+          <h2 class="section-title">Experience Real-Time Calibration</h2>
+          <p class="section-subtitle">
+            Test how different transport modes adjust arrival lead times, and preview the high-decibel wake-up tones designed to pierce deep sleep.
+          </p>
+        </div>
+
+        <div class="simulator-layout">
+          
+          <!-- Simulator Controls -->
+          <div class="glass-card sim-card">
+            
+            <div class="sim-group">
+              <label class="sim-label">1. Select Travel Transport Mode</label>
+              <div class="sim-mode-grid">
+                <button class="sim-mode-btn" data-sim-mode="bus" data-speed="35" data-def-radius="0.8">
+                  <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6v6"></path><path d="M15 6v6"></path><path d="M2 12h19.6"></path><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg>
+                  <span class="mode-name">City Bus</span>
+                  <span class="mode-speed">~35 km/h</span>
+                </button>
+                <button class="sim-mode-btn active" data-sim-mode="train" data-speed="110" data-def-radius="2.0">
+                  <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="16" rx="2"></rect><circle cx="8" cy="15" r="1"></circle><circle cx="16" cy="15" r="1"></circle></svg>
+                  <span class="mode-name">Commuter Train</span>
+                  <span class="mode-speed">~110 km/h</span>
+                </button>
+                <button class="sim-mode-btn" data-sim-mode="car" data-speed="70" data-def-radius="1.5">
+                  <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9C2.1 11 2 11.5 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+                  <span class="mode-name">Highway Van</span>
+                  <span class="mode-speed">~70 km/h</span>
+                </button>
+                <button class="sim-mode-btn" data-sim-mode="plane" data-speed="750" data-def-radius="15.0">
+                  <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path></svg>
+                  <span class="mode-name">Commercial Air</span>
+                  <span class="mode-speed">~750 km/h</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="sim-group">
+              <div class="sim-slider-header">
+                <label class="sim-label">2. Alarm Trigger Radius</label>
+                <span id="sim-radius-display" class="slider-val font-mono">2.0 km</span>
+              </div>
+              <input id="sim-radius-slider" type="range" min="0.2" max="25" step="0.1" value="2.0" class="sim-range">
+              <div class="slider-scale">
+                <span>0.2 km (Walking)</span>
+                <span>5 km (Transit)</span>
+                <span>25 km (High-Speed)</span>
+              </div>
+            </div>
+
+            <div class="sim-group">
+              <label class="sim-label">3. Wake-Up Tone Preview</label>
+              <div class="tone-picker">
+                <button class="tone-btn active" data-tone="siren">
+                  <span>🚨 Tactical Siren</span>
+                </button>
+                <button class="tone-btn" data-tone="chime">
+                  <span>🔔 Dual Chime</span>
+                </button>
+                <button class="tone-btn" data-tone="radar">
+                  <span>📡 Pulsed Sonar</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="sim-action-row">
+              <button id="sim-test-tone-btn" class="btn-pill-subtle">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span id="sim-test-tone-text">Test Selected Tone</span>
+              </button>
+              <button id="sim-trigger-arrival-btn" class="btn-pill-primary">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                <span>Simulate Crossing Perimeter</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Simulator Telemetry Output -->
+          <div class="glass-card sim-telemetry-panel">
+            <h3 class="panel-heading">Real-Time Geofence Telemetry</h3>
+
+            <div class="lead-time-box">
+              <span class="lead-time-label">Calculated Wake-Up Window</span>
+              <div class="lead-time-val-wrap">
+                <span id="sim-lead-minutes" class="lead-val font-mono">1.1</span>
+                <span class="lead-unit">Minutes</span>
+              </div>
+              <p class="lead-desc">Lead time before entering destination arrival zone based on current vehicle velocity.</p>
+            </div>
+
+            <div class="sim-stats-list">
+              <div class="sim-stat-row">
+                <span class="stat-name">Velocity Calibration</span>
+                <span id="sim-speed-val" class="stat-reading font-mono">110 km/h</span>
+              </div>
+              <div class="sim-stat-row">
+                <span class="stat-name">Trigger Radius</span>
+                <span id="sim-radius-val" class="stat-reading font-mono">2.0 km</span>
+              </div>
+              <div class="sim-stat-row">
+                <span class="stat-name">Active Tone Driver</span>
+                <span id="sim-tone-name" class="stat-reading font-mono">Tactical Siren (980Hz)</span>
+              </div>
+              <div class="sim-stat-row">
+                <span class="stat-name">Silent Mode Bypass</span>
+                <span class="stat-reading highlight-green font-mono">ACTIVE (ALARM STREAM)</span>
+              </div>
+            </div>
+
+            <div id="sim-alarm-alert" class="sim-alert-box hidden">
+              <div class="alert-icon">⚠️</div>
+              <div>
+                <div class="alert-title">PERIMETER BREACH DETECTED!</div>
+                <div class="alert-sub">Alarm firing at 100% volume. Destination stop ahead.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. FAQ SECTION -->
+    <section id="faq" class="section">
+      <div class="section-container max-w-4xl">
+        
+        <div class="section-header text-center">
+          <div class="section-tag">Frequently Asked Questions</div>
+          <h2 class="section-title">Everything You Need To Know</h2>
+          <p class="section-subtitle">
+            Clear answers about background battery consumption, silent mode override, and subway transit accuracy.
+          </p>
+        </div>
+
+        <div class="faq-list">
+          
+          <div class="glass-card faq-item active">
+            <button class="faq-trigger" aria-expanded="true">
+              <span class="faq-q">Does Antigravity work when I have no cell service or data connection?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              Yes. Antigravity relies directly on your phone’s internal GPS satellite receiver and cached coordinates. Once you set your destination pin before or during departure, all distance calculations and alarm triggers run locally on your device with 0 KB of internet data required.
+            </div>
+          </div>
+
+          <div class="glass-card faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <span class="faq-q">Will running background location tracking drain my battery during long commutes?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              No. Traditional navigation apps ping GPS continuously at maximum power, draining 15%–25% battery per hour. Antigravity uses tiered distance monitoring: when you are far from your stop, it stays in a low-power dormant state and only ramps up polling as you approach your selected perimeter radius. Average battery impact is under 1.8% per hour.
+            </div>
+          </div>
+
+          <div class="glass-card faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <span class="faq-q">Will the alarm wake me if my phone is in Silent mode or Do Not Disturb?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              Yes. Antigravity requests Android alarm stream override permissions. When armed, it channels the wake-up audio through the high-priority alarm sound channel so your phone rings even if your media volume or ringer is toggled to Silent.
+            </div>
+          </div>
+
+          <div class="glass-card faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <span class="faq-q">What happens in underground subway tunnels where GPS signals drop?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              The app maintains dead-reckoning velocity estimations based on your entry speed and last-known track waypoint. If the signal is obstructed for an extended period, the app triggers a gentle safety notification before you overshoot your estimated station window.
+            </div>
+          </div>
+
+          <div class="glass-card faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <span class="faq-q">Why is it distributed as a direct APK rather than on Google Play?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              Direct APK distribution gives you immediate access to unrestricted background location precision and custom alarm audio drivers without Google Play policy throttles or third-party ad frameworks. You download a clean, standalone package that belongs entirely to you.
+            </div>
+          </div>
+
+          <div class="glass-card faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <span class="faq-q">Can I set different wake-up radiuses for different transport modes?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              Yes. You can save customized presets: e.g., 500 meters for city buses (allowing 2 minutes to walk to the exit doors), 2.5 kilometers for commuter trains (giving 3 minutes at 90 km/h), or 20 kilometers for flights.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. CTA BANNER -->
+    <section class="section cta-section">
+      <div class="section-container max-w-5xl text-center">
+        
+        <div class="glass-card cta-card">
+          <div class="section-tag">Start Commuting In Peace</div>
+          <h2 class="cta-heading">Ready to travel worry-free?</h2>
+          <p class="cta-subhead">
+            Download the app now and turn your travel time into rest time.
+          </p>
+
+          <div class="cta-action-wrap">
+            <button id="cta-download-btn" class="btn-pill-primary cta-btn">
+              <span>Download the App</span>
+              <div class="icon-circle">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+              </div>
+            </button>
+          </div>
+
+          <div class="cta-trust-row">
+            <span>Direct APK (18.4 MB)</span>
+            <span class="sep">•</span>
+            <span>No Account Required</span>
+            <span class="sep">•</span>
+            <span class="highlight-green">Zero Cloud Server Tracking</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 7. MINIMALIST FOOTER -->
+  <footer class="page-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="brand-text">ANTIGRAVITY</span>
+        <span class="sep">•</span>
+        <span class="footer-tag">GPS Location Wake-Up Alarm</span>
+      </div>
+
+      <div class="footer-links">
+        <button id="open-privacy-btn" class="footer-link">Privacy Policy</button>
+        <button id="open-terms-btn" class="footer-link">Terms of Service</button>
+        <button id="open-contact-btn" class="footer-link">Contact / Support</button>
+        <button id="open-download-footer" class="footer-link highlight">Download APK</button>
+      </div>
+
+      <div class="footer-copy">
+        &copy; 2026 Antigravity. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- DOWNLOAD MODAL -->
+  <div id="download-modal" class="modal-backdrop hidden">
+    <div class="glass-card modal-box">
+      <button id="close-download-modal" class="modal-close-btn" aria-label="Close dialog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <div class="modal-header">
+        <div class="card-icon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </div>
+        <h3 class="modal-title">Download Antigravity APK</h3>
+        <p class="modal-subtitle">Direct, verified standalone Android package for offline installation.</p>
+      </div>
+
+      <div class="modal-body">
+        <div class="apk-info-box">
+          <div class="apk-row"><span>Package:</span><span class="font-mono">com.antigravity.locationalarm</span></div>
+          <div class="apk-row"><span>Version:</span><span class="font-mono">v2.4.1 (Stable)</span></div>
+          <div class="apk-row"><span>File Size:</span><span class="font-mono">18.4 MB</span></div>
+          <div class="apk-row"><span>Compatibility:</span><span>Android 8.0+ (Oreo to Android 15)</span></div>
+        </div>
+
+        <button id="start-apk-download-btn" class="btn-pill-primary w-full download-start-btn">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span id="start-download-btn-text">Download APK Now</span>
+        </button>
+
+        <div class="copy-link-row">
+          <input id="apk-link-input" type="text" readonly value="https://antigravity.app/download/antigravity-location-alarm-v2.4.1.apk" class="copy-input font-mono">
+          <button id="copy-link-btn" class="copy-btn">Copy Link</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGAL MODAL -->
+  <div id="legal-modal" class="modal-backdrop hidden">
+    <div class="glass-card modal-box legal-modal-box">
+      <button id="close-legal-modal" class="modal-close-btn" aria-label="Close dialog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <div id="legal-content">
+        <!-- Dynamically injected privacy/terms/contact -->
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
