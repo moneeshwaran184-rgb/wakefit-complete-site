@@ -452,48 +452,46 @@
   }
 
   function triggerDirectApkDownload() {
-    const apkManifest = `PACKAGE: com.antigravity.locationalarm
-VERSION: 2.4.1 (Build 2410)
-NAME: Antigravity GPS Wake-Up Alarm
-MIN_SDK: 26 (Android 8.0 Oreo)
-TARGET_SDK: 34 (Android 14)
-SHA256: 8f9b4e12c6a01e4a7c8b9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0
-PERMISSIONS:
-  - android.permission.ACCESS_FINE_LOCATION
-  - android.permission.ACCESS_BACKGROUND_LOCATION
-  - android.permission.POST_NOTIFICATIONS
-  - android.permission.WAKE_LOCK
-  - android.permission.VIBRATE
-
-Production verified package ready for standalone Android installation.
-`;
-
-    const blob = new Blob([apkManifest], { type: 'application/vnd.android.package-archive' });
-    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = 'antigravity-location-alarm-v2.4.1.apk';
+    a.href = 'WakeStop.apk';
+    a.download = 'WakeStop.apk';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
   }
 
   if (startApkDownloadBtn) {
-    startApkDownloadBtn.addEventListener('click', () => {
-      triggerDirectApkDownload();
+    startApkDownloadBtn.addEventListener('click', (e) => {
+      // Show instant feedback on the download button
       if (startDownloadBtnText) {
-        startDownloadBtnText.textContent = 'APK Download Initiated!';
+        startDownloadBtnText.textContent = 'Downloading WakeStop APK...';
         setTimeout(() => {
           startDownloadBtnText.textContent = 'Download APK Now';
-        }, 3000);
+        }, 3500);
       }
     });
+  }
+
+  // Populate actual APK download link into the input field
+  if (apkLinkInput) {
+    try {
+      const fullUrl = new URL('WakeStop.apk', window.location.href).href;
+      apkLinkInput.value = fullUrl;
+    } catch (_) {
+      apkLinkInput.value = window.location.origin + '/WakeStop.apk';
+    }
   }
 
   if (copyLinkBtn && apkLinkInput) {
     copyLinkBtn.addEventListener('click', () => {
       navigator.clipboard.writeText(apkLinkInput.value).then(() => {
+        copyLinkBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyLinkBtn.textContent = 'Copy Link';
+        }, 2000);
+      }).catch(() => {
+        apkLinkInput.select();
+        document.execCommand('copy');
         copyLinkBtn.textContent = 'Copied!';
         setTimeout(() => {
           copyLinkBtn.textContent = 'Copy Link';
